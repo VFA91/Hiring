@@ -34,18 +34,13 @@ namespace FraudPrevention
         }
         public string ZipCode { get; set; }
         public string CreditCard { get; set; }
-
-        public InfoPurchase()
-        {
-
-        }
-
+        
         public string SearchFraudulent(List<InfoPurchase> purchases)
         {
             var queryEmail = DifferenceEmail(purchases);
             var queryAddress = DifferenceAddress(purchases);
 
-            string result = GetOrderId(queryEmail) + GetOrderId(queryAddress);
+            string result = GetOrderIds(queryEmail) + GetOrderIds(queryAddress);
 
             return FormatResult(result);
         }
@@ -59,7 +54,7 @@ namespace FraudPrevention
             return result;
         }
 
-        private string GetOrderId(IEnumerable<InfoPurchase> query)
+        private string GetOrderIds(IEnumerable<InfoPurchase> query)
         {
             string result = "";
             if (query != null && query.Count() > 0)
@@ -100,14 +95,24 @@ namespace FraudPrevention
             return queryAddress.FirstOrDefault();
         }
 
-        private static string FormatEmailAddress(string email)
+        private string FormatEmailAddress(string email)
         {
             email = email.DefaultFormat();
-            email = email.Split('@')[0].Replace(".", "") + "@" + email.Split('@')[1];
+            email = ClearDotsEmail(email);
+            email = ClearPlusEmail(email);
+
+            return email;
+        }
+        private string ClearDotsEmail(string email)
+        {
+            return email.Split('@')[0].Replace(".", "") + "@" + email.Split('@')[1];
+        }
+
+        private string ClearPlusEmail(string email)
+        {
             int existPlus = email.IndexOf('+');
             if (existPlus > 0)
-                email = email.Remove(existPlus, email.IndexOf('@') - existPlus);
-
+                return email.Remove(existPlus, email.IndexOf('@') - existPlus);
             return email;
         }
 

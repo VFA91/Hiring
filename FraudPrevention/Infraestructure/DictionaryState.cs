@@ -12,7 +12,7 @@ namespace FraudPrevention
             {
                 { "il", "illinois"},
                 { "ca", "california"},
-                { "ny", "york"}
+                { "ny", "new york"}
             };
         }
 

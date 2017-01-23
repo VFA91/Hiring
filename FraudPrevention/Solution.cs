@@ -8,10 +8,9 @@ public class Solution
 {
     private int allRegister;
     private StringBuilder textFile = new StringBuilder();
+
     static void Main(string[] args)
     {
-        var a = Math.Round(0.0450m, 2); //importe
-        var b = decimal.Round(0.0450m, 2); //importe editado
         /* Enter your code here. Read input from STDIN. Print output to STDOUT. Your class should be named Solution */
         Solution solution = new Solution();
         solution.Start();
@@ -19,23 +18,23 @@ public class Solution
 
     private void Start()
     {
-        GetData();
+        GetInputData();
 
-        List<InfoPurchase> purchases = new List<InfoPurchase>();
-        purchases = GetAllInfoPurchase(purchases);
+        List<InfoPurchase> purchases = GetAllInfoPurchase();
 
         InfoPurchase purchase = new InfoPurchase();
         Console.WriteLine(purchase.SearchFraudulent(purchases));
         Console.ReadKey();
     }
 
-    private void GetData()
+    private void GetInputData()
     {
         //Initialize variables
         allRegister = 3;
         textFile.AppendLine("1,1,bugs@bunny.com,123 Sesame St.,New York,NY,10011,12345689010");
         textFile.AppendLine("2,1,elmer@fudd.com,123 Sesame St.,New York,NY,10011,10987654321");
         textFile.AppendLine("3,2,bugs@bunny.com,123 Sesame St.,New York,IL,10011,12345689010");
+
 
         //Console
         //allRegister = int.Parse(Console.ReadLine());
@@ -45,25 +44,35 @@ public class Solution
         //}
     }
 
-    private List<InfoPurchase> GetAllInfoPurchase(List<InfoPurchase> purchases)
+    private List<InfoPurchase> GetAllInfoPurchase()
     {
-        string[] arrayRegisters = GetPurchase();
+        List<InfoPurchase> purchases = new List<InfoPurchase>();
+        string[] arrayPurchases = GetArrayPurchases();
+        arrayPurchases = ClearArrayPurchases(arrayPurchases);
 
+        return LoadInfoPurchase(purchases, arrayPurchases); // purchases;
+    }
+
+    private List<InfoPurchase> LoadInfoPurchase(List<InfoPurchase> purchases, string[] arrayPurchases)
+    {
         for (int i = 0; i < allRegister; i++)
         {
-            string[] register = arrayRegisters[i].Split(',');
+            string[] register = arrayPurchases[i].Split(',');
             purchases.Add(NewInfoPurchase(register));
         }
 
         return purchases;
     }
-
-    private string[] GetPurchase()
+    
+    private string[] GetArrayPurchases()
     {
         string[] stringSeparators = new string[] { "\r\n" };
-        string[] arrayRegisters = textFile.ToString().Split(stringSeparators, StringSplitOptions.None);
-        arrayRegisters = arrayRegisters.Where(x => !string.IsNullOrEmpty(x)).ToArray();
-        return arrayRegisters;
+        return textFile.ToString().Split(stringSeparators, StringSplitOptions.None);
+    }
+
+    private string[] ClearArrayPurchases(string[] purchases)
+    {
+        return purchases.Where(x => !string.IsNullOrEmpty(x)).ToArray();
     }
 
     private InfoPurchase NewInfoPurchase(string[] register)
