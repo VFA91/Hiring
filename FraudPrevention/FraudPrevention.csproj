@@ -41,13 +41,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Infraestructure\DictionaryState.cs" />
-    <Compile Include="Infraestructure\DictionaryStreetAddress.cs" />
-    <Compile Include="Infraestructure\Extension.cs" />
+    <Compile Include="Entity\InfoPurchase.cs" />
     <Compile Include="InfoPurchase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Solution.cs" />
+    <Compile Include="Utils\Addresses.cs" />
+    <Compile Include="Utils\States.cs" />
+    <Compile Include="ValueObject\Address.cs" />
+    <Compile Include="ValueObject\Email.cs" />
+    <Compile Include="ValueObject\ValueObject.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
