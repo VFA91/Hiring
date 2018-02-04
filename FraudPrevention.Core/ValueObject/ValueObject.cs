@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-
-namespace FraudPrevention.ValueObject
+﻿namespace FraudPrevention.Core.ValueObject
 {
+    using System.Collections.Generic;
+    using System.Linq;
+
     public abstract class ValueObject<T>
         where T : ValueObject<T>
     {
@@ -31,22 +31,6 @@ namespace FraudPrevention.ValueObject
                         return current * 23 + (obj?.GetHashCode() ?? 0);
                     }
                 });
-        }
-
-        public static bool operator ==(ValueObject<T> a, ValueObject<T> b)
-        {
-            if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
-                return true;
-
-            if (ReferenceEquals(a, null) || ReferenceEquals(b, null))
-                return false;
-
-            return a.Equals(b);
-        }
-
-        public static bool operator !=(ValueObject<T> a, ValueObject<T> b)
-        {
-            return !(a == b);
         }
     }
 }
